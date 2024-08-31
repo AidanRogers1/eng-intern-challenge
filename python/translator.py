@@ -1,15 +1,24 @@
-def is_braille(str1):
-    for item in str1:
-        if item != "." and item != "o" and item != "O":
+def is_braille(message):
+    """
+    Check if input is braille or english
+    :param message: braille or english input string
+    :return: returns true for braille, false for english
+    """
+    for item in message:
+        if item not in (".", "O"):
             return False
     return True
 
 
-def translate_to_braille(str1):
+def translate_to_braille(message):
+    """
+    Translate english strings to braille
+    :param message: english input string
+    """
     output = ""
     is_number = False
 
-    for item in str1:
+    for item in message:
         if item.isupper():
             output += ".....O"  # Check for capital
             item = item.lower()
@@ -28,30 +37,34 @@ def translate_to_braille(str1):
     return
 
 
-def translate_to_english(str1):
+def translate_to_english(message):
+    """
+    Translate braille input strings to english
+    :param message: braille input string
+    """
     output = ""
     counter = 1
     capitalize = False
     number = False
-    for x in range(len(str1)):
-        output += str1[x]
+    for x in range(len(message)):
+        output += message[x]
 
-        if counter % 6 == 0:
+        if counter % 6 == 0:          # Separate braille string into characters
 
-            if output == ".O.OOO":
+            if output == ".O.OOO":    # Check for numbers
                 number = True
-            elif output == "......":
+            elif output == "......":  # Check for spaces
                 number = False
 
 
             if capitalize:
-                print(character_translations[output].capitalize(), end="")
+                print(character_translations[output].capitalize(), end="")  # Print capitals
             elif number and output != ".O.OOO":
-                print(number_translations[output], end="")
+                print(number_translations[output], end="")  # Print numbers
             elif not number:
-                print(character_translations[output], end="")
+                print(character_translations[output], end="")  # Print lowercase
 
-            if output == ".....O":
+            if output == ".....O":  # Capitalize next character
                 capitalize = True
 
             else:
